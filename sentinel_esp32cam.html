@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+<title>Sentinel | Videovigilancia</title>
+<style>
+:root{--bg:#080d18;--panel:#101827;--panel2:#0c1422;--line:#233149;--text:#edf4ff;--muted:#8fa0b8;--green:#39e6a0;--red:#ff647c;--blue:#72a7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#142644 0,transparent 42%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#172338;color:var(--text);padding:10px 14px;border-radius:10px;transition:.2s}button:hover{border-color:#5475a4;transform:translateY(-1px)}button.primary{background:var(--green);color:#062218;border-color:var(--green);font-weight:800}button.danger{color:#ff9aaa;border-color:#653143;background:#291522}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);border-bottom:1px solid #1c2a3e;background:#080d18cc;backdrop-filter:blur(12px);position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#2bdfad,#3178ff);color:#06101b;font-size:22px;font-weight:900}.brand strong{letter-spacing:2px;font-size:16px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2.4px;margin-top:4px}.topright{display:flex;align-items:center;gap:18px;color:var(--muted);font-size:13px}.livepill{display:flex;align-items:center;gap:8px;border:1px solid #245844;background:#0d2a24;color:#75f4bd;border-radius:99px;padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:1px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+main{max-width:1440px;margin:auto;padding:28px clamp(16px,4vw,48px) 40px}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:24px}.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.heading h1{font-size:clamp(25px,3vw,36px);margin:8px 0 7px;letter-spacing:-1px}.heading p{margin:0;color:var(--muted);font-size:14px}.clock{text-align:right}.clock strong{font-size:24px;font-variant-numeric:tabular-nums}.clock span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.8fr);gap:18px}.panel{background:linear-gradient(145deg,#111c2d,#0c1421);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 16px 50px #0002}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;border-bottom:1px solid var(--line)}.panelhead h2{font-size:14px;margin:0;letter-spacing:.3px}.camname{display:flex;align-items:center;gap:10px}.camicon{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:#1b2c43;font-size:17px}.sub{font-size:11px;color:var(--muted);margin-top:4px}.status{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}.status .dot{background:#687891;box-shadow:none}.status.ok{color:var(--green)}.status.ok .dot{background:var(--green);box-shadow:0 0 10px #39e6a077}.videoarea{padding:14px;background:#050910}.video{position:relative;background:repeating-linear-gradient(135deg,#0b1422,#0b1422 12px,#0d1928 12px,#0d1928 24px);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;border:1px solid #25364e}.video img{width:100%;height:100%;object-fit:contain;display:none}.placeholder{text-align:center;padding:25px;max-width:400px}.cameraemoji{font-size:42px;filter:grayscale(.3);margin-bottom:10px}.placeholder h3{margin:0 0 8px;font-size:16px}.placeholder p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}.overlay{position:absolute;inset:0;pointer-events:none;display:none}.overlay.show{display:block}.corner{position:absolute;width:25px;height:25px;border-color:#46edb6;border-style:solid;opacity:.8}.tl{top:14px;left:14px;border-width:2px 0 0 2px}.tr{top:14px;right:14px;border-width:2px 2px 0 0}.bl{bottom:14px;left:14px;border-width:0 0 2px 2px}.br{bottom:14px;right:14px;border-width:0 2px 2px 0}.camtag{position:absolute;top:16px;left:50px;font-size:10px;letter-spacing:1.5px;color:#dce9fa;background:#07101bc9;padding:7px 9px;border-radius:6px}.timestamp{position:absolute;bottom:15px;left:16px;background:#07101bc9;padding:7px 9px;border-radius:6px;font:11px ui-monospace,monospace}.recordtag{position:absolute;top:16px;right:50px;display:flex;align-items:center;gap:6px;background:#07101bc9;padding:7px 9px;border-radius:6px;font-size:10px;color:#ff8e9d}.recordtag .dot{background:var(--red);box-shadow:0 0 8px #ff647c}.videoactions{display:flex;flex-wrap:wrap;gap:9px;padding:13px 0 0}.videoactions button{font-size:12px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 18px 18px}.stat{border:1px solid #202e43;background:#0b1421;border-radius:12px;padding:12px}.stat span{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}.stat strong{font-size:14px}.side{display:flex;flex-direction:column;gap:18px}.content{padding:18px}.fieldlabel{display:block;color:var(--muted);font-size:11px;margin-bottom:8px}.field{display:flex;gap:7px}.field input{min-width:0;width:100%;background:#080f1b;border:1px solid #2a3a51;border-radius:9px;padding:11px;color:var(--text);font-size:12px;outline:none}.field input:focus{border-color:var(--blue)}.hint{color:var(--muted);font-size:11px;line-height:1.6;margin:10px 0 0}.divider{height:1px;background:var(--line);margin:17px 0}.controlrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0}.controlrow span{font-size:12px}.switch{position:relative;width:42px;height:24px;border-radius:30px;background:#2b394d;border:0;padding:0}.switch:after{content:"";position:absolute;top:4px;left:4px;width:16px;height:16px;border-radius:50%;background:white;transition:.2s}.switch.active{background:#168b66}.switch.active:after{left:22px}.quickgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick{padding:14px 10px;text-align:left}.quick b{display:block;font-size:12px;margin-bottom:5px}.quick small{font-size:10px;color:var(--muted)}.quick .ico{font-size:18px;display:block;margin-bottom:10px}.notice{padding:12px 13px;background:#111e30;border:1px solid #283b55;border-radius:10px;color:#a9bdd7;font-size:11px;line-height:1.6}.notice strong{color:#e5efff}.footer{display:flex;justify-content:space-between;gap:12px;color:#63748c;font-size:10px;padding-top:22px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.heading{align-items:flex-start}.clock{display:none}}
+@media(max-width:580px){header{height:65px}.topright .date{display:none}main{padding-top:22px}.heading{display:block}.side{display:flex}.stats{gap:6px;padding:10px}.stat{padding:10px 8px}.stat strong{font-size:12px}.panelhead{padding:14px}.recordtag{right:10px;top:10px}.camtag{left:10px;top:10px}.timestamp{left:10px;bottom:10px}.corner{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">◉</div><div><strong>SENTINEL</strong><small>HOME SECURITY SYSTEM</small></div></div>
+  <div class="topright"><span class="date" id="headerDate">--</span><div class="livepill"><span class="dot"></span> SISTEMA LOCAL</div></div>
+</header>
+<main>
+  <div class="heading">
+    <div><div class="eyebrow">Centro de monitoreo / 01</div><h1>Panel de vigilancia</h1><p>Controla y visualiza tu cámara ESP32-CAM desde una sola pantalla.</p></div>
+    <div class="clock"><strong id="clock">--:--:--</strong><span id="fullDate">Conectado a la red local</span></div>
+  </div>
+  <div class="layout">
+    <section class="panel">
+      <div class="panelhead">
+        <div class="camname"><div class="camicon">📹</div><div><h2>Cámara principal</h2><div class="sub">ESP32-CAM · Canal 01</div></div></div>
+        <div class="status" id="status"><span class="dot"></span><span id="statusText">SIN CONECTAR</span></div>
+      </div>
+      <div class="videoarea">
+        <div class="video" id="videoBox">
+          <img id="stream" alt="Transmisión en vivo de la ESP32-CAM">
+          <div class="placeholder" id="placeholder"><div class="cameraemoji">◉</div><h3>Vista de cámara</h3><p>Presiona <b>Conectar cámara</b> para intentar abrir la transmisión de tu ESP32-CAM. La computadora y la cámara deben estar en la misma red.</p></div>
+          <div class="overlay" id="overlay"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span><span class="camtag">CAM 01 · ESP32-CAM</span><span class="recordtag"><span class="dot"></span> LIVE</span><span class="timestamp" id="videoTime">--</span></div>
+        </div>
+        <div class="videoactions">
+          <button class="primary" id="connectBtn">▶ Conectar cámara</button>
+          <button id="retryBtn">↻ Reconectar</button>
+          <button id="fullBtn">⛶ Pantalla completa</button>
+          <button id="openBtn">↗ Abrir transmisión</button>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><span>ESTADO DE VIDEO</span><strong id="videoState">En espera</strong></div>
+        <div class="stat"><span>TIEMPO EN PANTALLA</span><strong id="uptime">00:00:00</strong></div>
+        <div class="stat"><span>TIPO DE CONEXIÓN</span><strong>Wi-Fi local</strong></div>
+      </div>
+    </section>
+    <aside class="side">
+      <section class="panel">
+        <div class="panelhead"><h2>Configuración de cámara</h2><span>⚙</span></div>
+        <div class="content">
+          <label class="fieldlabel" for="streamUrl">URL de transmisión (MJPEG)</label>
+          <div class="field"><input id="streamUrl" value="http://172.16.252.186:81/stream" spellcheck="false"><button class="primary" id="saveBtn">Usar</button></div>
+          <p class="hint">Si no aparece el video, prueba <b>http://172.16.252.186/</b> o revisa la ruta de transmisión que utiliza tu firmware.</p>
+          <div class="divider"></div>
+          <div class="controlrow"><span>Retícula de enfoque</span><button class="switch active" id="gridToggle" aria-label="Alternar retícula"></button></div>
+          <div class="controlrow"><span>Mostrar etiqueta de cámara</span><button class="switch active" id="labelToggle" aria-label="Alternar etiqueta"></button></div>
+          <div class="controlrow"><span>Marca visual LIVE</span><button class="switch active" id="liveToggle" aria-label="Alternar marca LIVE"></button></div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panelhead"><h2>Accesos rápidos</h2><span>⌘</span></div>
+        <div class="content">
+          <div class="quickgrid">
+            <button class="quick" id="reloadBtn"><span class="ico">🔄</span><b>Actualizar video</b><small>Reiniciar conexión</small></button>
+            <button class="quick" id="newTabBtn"><span class="ico">🌐</span><b>Panel original</b><small>Abrir web ESP32</small></button>
+            <button class="quick" id="copyBtn"><span class="ico">🔗</span><b>Copiar dirección</b><small>URL de transmisión</small></button>
+            <button class="quick" id="helpBtn"><span class="ico">ⓘ</span><b>Ayuda de conexión</b><small>Solución de problemas</small></button>
+          </div>
+          <div class="divider"></div>
+          <div class="notice" id="notice"><strong>Privacidad:</strong> esta página no envía el video a internet ni graba automáticamente. El acceso depende de tu red local y de la configuración de la ESP32-CAM.</div>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <div class="footer"><span>SENTINEL UI · INTERFAZ LOCAL DE MONITOREO</span><span>ESP32-CAM · VIDEO EN RED LOCAL</span></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let startedAt=null, elapsedTimer=null, connected=false;
+const defaultUrl='http://172.16.252.186:81/stream';
+function updateClock(){
+ const d=new Date();
+ $('clock').textContent=d.toLocaleTimeString('es-PE',{hour12:false});
+ $('headerDate').textContent=d.toLocaleDateString('es-PE',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+ $('fullDate').textContent=d.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ $('videoTime').textContent=d.toLocaleString('es-PE',{hour12:false});
+}
+function setStatus(ok,msg){
+ connected=ok; $('status').classList.toggle('ok',ok);
+ $('statusText').textContent=msg;
+ $('videoState').textContent=ok?'Transmisión activa':'En espera / revisar URL';
+}
+function connect(){
+ let url=$('streamUrl').value.trim();
+ if(!url){$('notice').innerHTML='<strong>Falta la dirección:</strong> escribe la URL de transmisión de tu ESP32-CAM.';return;}
+ $('stream').style.display='block';$('placeholder').style.display='none';setStatus(false,'CONECTANDO…');$('videoState').textContent='Conectando…';
+ $('stream').onload=()=>{setStatus(true,'VIDEO RECIBIDO');$('overlay').classList.add('show');if(!startedAt){startedAt=Date.now();startElapsed();}};
+ $('stream').onerror=()=>{setStatus(false,'SIN SEÑAL');$('stream').style.display='none';$('placeholder').style.display='block';$('overlay').classList.remove('show');$('placeholder').innerHTML='<div class="cameraemoji">⚠</div><h3>No se pudo mostrar el video</h3><p>Verifica que la cámara esté encendida, que ambas estén en la misma red y que la URL sea correcta. Algunas páginas de control no son la ruta del video.</p>';};
+ $('stream').src=url+(url.includes('?')?'&':'?')+'t='+Date.now();
+}
+function startElapsed(){if(elapsedTimer)clearInterval(elapsedTimer);elapsedTimer=setInterval(()=>{if(startedAt){let s=Math.floor((Date.now()-startedAt)/1000);$('uptime').textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(v=>String(v).padStart(2,'0')).join(':');}},1000);}
+function reconnect(){startedAt=null;$('uptime').textContent='00:00:00';connect();}
+$('connectBtn').onclick=connect;$('retryBtn').onclick=reconnect;$('saveBtn').onclick=connect;$('reloadBtn').onclick=reconnect;
+$('fullBtn').onclick=()=>{const el=$('videoBox');if(el.requestFullscreen)el.requestFullscreen();};
+$('openBtn').onclick=()=>window.open($('streamUrl').value.trim(),'_blank','noopener');
+$('newTabBtn').onclick=()=>window.open('http://172.16.252.186/','_blank','noopener');
+$('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText($('streamUrl').value.trim());$('notice').innerHTML='<strong>Copiado.</strong> La dirección de transmisión se copió al portapapeles.';}catch(e){$('streamUrl').select();document.execCommand('copy');$('notice').innerHTML='<strong>Dirección seleccionada.</strong> Puedes copiarla manualmente.';}};
+$('helpBtn').onclick=()=>{$('notice').innerHTML='<strong>Si no hay video:</strong><br>1. Abre la dirección original de la cámara.<br>2. Comprueba si el video se muestra en una opción de stream.<br>3. Prueba la ruta /stream o el puerto :81/stream.<br>4. Asegúrate de que PC y cámara estén en la misma red.';};
+function toggle(id, target, className){$(id).onclick=()=>{const active=$(id).classList.toggle('active');$(target).classList.toggle(className,active);};}
+toggle('gridToggle','overlay','show');
+$('labelToggle').onclick=()=>{const active=$('labelToggle').classList.toggle('active');document.querySelector('.camtag').style.display=active?'':'none';};
+$('liveToggle').onclick=()=>{const active=$('liveToggle').classList.toggle('active');document.querySelector('.recordtag').style.display=active?'':'none';};
+setInterval(updateClock,1000);updateClock();
+</script>
+</body>
+</html>
